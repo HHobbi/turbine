@@ -1,0 +1,64 @@
+﻿@model List<WebApplication15.Models.Manager>
+
+@{
+    ViewBag.Title = "حذف";
+}
+<style>
+    th, td, thead, tbody {
+        text-align: center;
+        padding: 7px;
+    }
+    th {
+    padding:10px;
+    }
+</style>
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>نام</th>
+            <th>ایمیل</th>
+            <th>شماره تماس</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            @if (item.Name == null || item.Name=="")
+            {
+
+
+                <td>...</td>
+            }
+            else
+            {
+                <td>@item.Name</td>
+            }
+
+            @if ( item.Email == null || item.Email == "")
+            {
+
+
+                <td>...</td>
+            }
+            else
+            {
+                <td>@item.Email</td>
+            }
+
+            @if (item.Phone == null || item.Phone == "")
+            {
+
+
+                <td>...</td>
+            }
+            else
+            {
+                <td>@item.Phone</td>
+            }
+
+            
+        </tr>
+        }
+    </tbody>
+</table>

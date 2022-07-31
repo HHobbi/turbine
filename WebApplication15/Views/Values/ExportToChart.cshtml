@@ -1,0 +1,1013 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+
+    <title>نمودار گیری</title>
+    <style>
+        thead th, thead div,td {
+            text-align:center;
+        }
+        
+
+        #timeToRender {
+            position: relative;
+            top: 10px;
+            max-height: 300px;
+            max-width: 500px;
+            font-size: 10px;
+            font-weight: bold;
+            background-color: #d85757;
+            padding: 0px 4px;
+            color: #00ffff;
+        }
+
+
+
+        .sidebar {
+            width: 26rem !important;
+        }
+
+            .sidebar .nav-item .nav-link[data-toggle=collapse].collapsed::after {
+                content: '\f104' !important;
+            }
+
+        .nav-chart {
+            display: inline-block;
+            padding: 0px;
+            background-color: lightgray;
+            width: 100px;
+            height: 60px;
+            border-radius: 10px;
+            border: 2px solid lightskyblue;
+            overflow: hidden;
+        }
+
+        .esmothly:hover {
+            transform: scale(1.2,1.2);
+            transition: 1.5s;
+            transition-timing-function: ease-in-out;
+        }
+
+        .statistics_Value {
+            height: 20px;
+            background-color: azure;
+            border-radius: 3px;
+            border: 1px solid black;
+            margin: 5px;
+            text-align: center;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .img-profile {
+            width: 45px !important;
+            height: 45px !important;
+        }
+        .img-thumbnail {
+       padding:2px !important;
+            }
+    </style>
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/Content/Bootstrap_Rtl/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="~/Content/chART/sb-admin-2.min.css" rel="stylesheet" />
+    <style>
+        #wrapper ul li * {
+            float: right;
+        }
+
+        li, span {
+            font-size: 15px !important;
+        }
+
+        li {
+            padding: 10px 0;
+        }
+    </style>
+
+</head>
+
+<body id="page-top" dir="rtl">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="width: 22rem !important">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#" style="font-size:20px">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">نمودار ها </div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item" style="font-size:20px !important">
+                <a class="nav-link" href="/Home/HomePage">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span class="dash" style="">&nbsp&nbsp&nbspخانه</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading text-right" style="font-size:13px">
+                نمودار
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    @*<i class="fas fa-fw fa-cog"> </i>*@
+                    <i class="fas fa-fw fa-chart-area"></i>
+
+                    <span>&nbsp&nbsp&nbsp نمودار گیری  &nbsp</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" ">
+                    <div class="bg-white py-2 collapse-inner rounded" style="padding-right:30px">
+                        <br />
+                        <button id="SingleDate" class="bg-white" style="border:none;font-size:15px; ">روزانه</button>
+                        <br />
+                        <br />
+                        <button id="IntervalDate" class="bg-white" style="border:none;font-size:15px; ">بازه ای </button>
+                    </div>
+                </div>
+            </li>
+
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item active">
+                <a class="nav-link">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span style="cursor:pointer" id="Compar">&nbsp&nbsp&nbspمقایسه ای</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading text-right" style="font-size:13px">
+                صفحات دیگر
+            </div>
+
+
+
+
+
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="/sections">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>&nbsp&nbsp&nbspجداول</span>
+                </a>
+            </li>
+            @if (User.IsInRole("manager"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Managment/UpdateProfile">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>&nbsp&nbsp&nbspپروفایل</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Values/UpdateProfile">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>&nbsp&nbsp&nbspپروفایل</span>
+                    </a>
+                </li>
+            }
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav dir="ltr" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto" style="margin-left: 20px !important; direction: rtl;">
+
+
+
+                        <!-- profile user -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="padding:15px;font-weight:bold">@User.Identity.Name</span>
+
+                                @if (ViewBag.Model != null)
+                                {
+                                    if (ViewBag.Model.ImageName != null)
+                                    {
+
+                                        <img src="~/UserImages/@ViewBag.Model.ImageName" class="img-profile rounded-circle img-thumbnail" />
+
+                                    }
+                                    else
+                                    {
+                                        <img class="img-profile rounded-circle" src="~/Content/chART/img/undraw_profile.svg" />
+
+                                    }
+                                }
+                                else
+                                {
+                                    <img class="img-profile rounded-circle" src="~/Content/chART/img/undraw_profile.svg" />
+
+                                }
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                @if (User.IsInRole("manager"))
+                                {
+                                    <a class="dropdown-item" href="/Managment/SignOut" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        <span style="font-size:10px;">خروج</span>
+
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" href="/Values/SignOut" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        <span style="font-size:10px;">خروج</span>
+
+                                    </a>
+                                }
+
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid" style="text-align:right">
+
+                    <!-- Page Heading -->
+                    <h4 class="h3 mb-2 text-gray-800" id="name"></h4>
+                    <p class="mb-4" id="sokhan"></p>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <div class="col-xl-8 col-lg-7">
+
+                            <!-- Area Chart -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h5 style="display: inline; padding: 10px" class="m-0 font-weight-bold text-primary">نوع نمودار <span style="color:red">:</span> <span id="TypeOfChart"></span></h5>
+                                    <h5 style="display:inline; padding: 10px" class="m-0 font-weight-bold text-primary"> بخش  <span style="color:red">:</span>@ViewBag.NameOfSection </h5>
+                                    <h5 style="display:inline; padding: 10px" class="m-0 font-weight-bold text-primary"> قسمت  <span style="color:red">:</span>@ViewBag.NameOFPart </h5>
+                                    <h6 style="display:inline; padding: 10px" class="m-0 font-weight-bold text-primary">
+                                        تاریخ  <span style="color:red">:</span>
+                                        @*اگر دکمه ی نمودار گیری بازه ای انتخاب شده*@
+                                        @*assign in IntervalDate Action*@
+                                        @if (ViewBag.Date2 != null)
+                                        {
+                                            <span style="color:red">از</span>
+                                            @ViewBag.Date1;
+                                            <span style="color:red">تا</span>
+                                            @ViewBag.Date2;
+                                        }
+                                        @*اگر دکمه ی مقایسه ای انتخاب شده*@
+                                        @*assign in Comparation2Days Action*@
+                                        else if (ViewBag.LDate != null || ViewBag.FDate != null)
+                                        {
+                                            if (ViewBag.DataPoints1 == "[]")
+                                            {
+                                                <span style="color:gray">@ViewBag.FDate</span>
+                                            }
+                                            else
+                                            {
+                                                @ViewBag.FDate;
+                                            }
+                                            <span style="color:red">و</span>
+
+                                            if (ViewBag.DataPoints2 == "[]")
+                                            {
+                                                <span style="color:gray">@ViewBag.LDate</span>
+                                            }
+                                            else
+                                            {
+                                                @ViewBag.LDate;
+                                            }
+                                        }
+                                        @*حالت دیفالت و حالت نمودارگیری بازه ای*@
+                                        @*assign in SingleDate Action*@
+                                        else
+                                        {
+                                            @ViewBag.Date;
+                                        }
+
+
+
+
+                                    </h6>
+
+
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="chart-area">
+
+
+                                        <div id="chart" style="display:inline-block;width:100%; height: 200px;">
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+
+                            <div style="width:100%; margin:40px">
+
+                                <div style="width:20%;height:120px;background-color:rgb(61, 192, 178, 0.20);border-radius:20px;float:left;margin:0px 20px;">
+                                    <div style="overflow:hidden; width: 90%; height: 90%; background-color: black; border-radius: 20px;position:relative; top:-30px;right:10px">
+                                        <img src="~/Content/chART/img/6.PNG" style="width:100%;height:100%;" id="LinearChart" class="esmothly" />
+
+                                    </div>
+                                    <p style="text-align:center;position:relative;bottom:15px">
+                                        نمودار خطی
+                                    </p>
+
+                                </div>
+
+
+                                @if (ViewBag.DataPoints2 == null || ViewBag.DataPoints2 == "[]")
+                                {
+                                    <div style="width:20%;height:120px;background-color:rgb(61, 192, 178, 0.20);border-radius:20px;float:left;margin:0px 20px;">
+                                        <div style="overflow:hidden; width: 90%; height: 90%; background-color: white; border-radius: 20px;position:relative; top:-30px;right:10px">
+                                            <img src="~/Content/chART/img/15.PNG" style="width:100%;height:100%;" id="CircularChart" class="esmothly" />
+                                        </div>
+                                        <p style="text-align:center;position:relative;bottom:15px">
+                                            نمودار دایره
+                                        </p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="width:20%;height:120px;background-color:rgb(61, 192, 178, 0.20);border-radius:20px;float:left;margin:0px 20px;">
+                                        <div style="overflow:hidden; width: 90%; height: 90%; background-color: white; border-radius: 20px;position:relative; top:-30px;right:10px">
+                                            @*<img src="~/Content/chART/img/15.PNG"  />*@
+                                            <img src="~/Content/chART/img/scatter1.jpg" style="width:105%;height:105%;" id="ScatterChart" class="esmothly" />
+                                        </div>
+                                        <p style="text-align:center;position:relative;bottom:15px">
+                                            نمودار پراکندگی
+                                        </p>
+                                    </div>
+                                }
+
+                                <div style="width:20%;height:120px;background-color:rgb(61, 192, 178, 0.20);border-radius:20px;float:left;margin:0px 20px;">
+                                    <div style="overflow:hidden; width: 90%; height: 90%; background-color: orange; border-radius: 20px;position:relative; top:-30px;right:10px">
+                                        <img src="~/Content/chART/img/2.PNG" style="width:100%;height:100%;" id="ColumnChart" class="esmothly" />
+                                    </div>
+                                    <p style="text-align:center;position:relative;bottom:15px">
+                                        نمودار ستونی
+                                    </p>
+                                </div>
+
+
+
+                                <div style="width: 20%; height: 120px; background-color: rgb(61, 192, 178, 0.20); border-radius: 20px; float: left; margin: 0px 20px; ">
+                                    <div style="overflow:hidden; width: 90%; height: 90%; background-color: white; border-radius: 20px;position:relative; top:-30px;right:10px">
+                                        <img src="~/Content/chART/img/18.PNG" style="width:100%;height:100%" id="AreaChart" class="esmothly" />
+                                    </div>
+                                    <p style="text-align:center;position:relative;bottom:15px">
+                                        نمودار مساحت
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Donut Chart -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center">شاخصه های آماری </h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-8">
+                                        <table style="width:100%;">
+                                            <tr>
+                                            <thead>
+                                            <th>شاخصه</th>
+
+                                            @if (ViewBag.Date2 != null)
+                                            {
+                                                <th>مقدار</th>
+
+
+                                            }
+
+                                            
+                                            @*اگر دکمه ی مقایسه ای انتخاب شده*@
+                                            @*assign in Comparation2Days Action*@
+                                            else if (ViewBag.LDate != null)
+                                            {
+                                                <th>@ViewBag.FDate</th>
+                                                <th>@ViewBag.LDate</th>
+
+                                            }
+                                            else
+                                            {
+                                                <th>مقدار</th>
+                                            }
+                                            </thead>
+                                            </tr>
+                                            <tr>
+                                            <tbody>
+                                            <td>میانگین</td>
+                                            <td><div class="statistics_Value">@ViewBag.avg</div></td>
+                                            @if (ViewBag.DataPoints2 != null && ViewBag.DataPoints2 != "[]")
+                                            {
+                                                <td><div class="statistics_Value">@ViewBag.avg2</div></td>
+                                            }
+                                            </tr>
+                                            <tr>
+                                                <td>میانه</td>
+                                                <td><div class="statistics_Value">@ViewBag.median</div></td>
+                                                @if (ViewBag.DataPoints2 != null && ViewBag.DataPoints2 != "[]")
+                                                {
+                                                    <td><div class="statistics_Value">@ViewBag.median2</div></td>
+                                                }
+                                            </tr>
+                                            <tr>
+                                                <td>مد</td>
+                                                <td><div class="statistics_Value">@ViewBag.mod</div></td>
+                                                @if (ViewBag.DataPoints2 != null && ViewBag.DataPoints2 != "[]")
+                                                {
+                                                    <td><div class="statistics_Value">@ViewBag.mod2</div></td>
+
+                                                }
+                                            </tr>
+                                            <tr>
+                                                <td>واریانس</td>
+                                                <td><div class="statistics_Value">@ViewBag.varianc</td>
+                                                @if (ViewBag.DataPoints2 != null && ViewBag.DataPoints2 != "[]")
+                                                {
+                                                    <td><div class="statistics_Value">@ViewBag.varianc2</td>
+                                                }
+                                            </tr>
+                                            <tr>
+                                                <td>انحراف معیار</td>
+                                                <td><div class="statistics_Value">@ViewBag.enheraf</td>
+                                                @if (ViewBag.DataPoints2 != null && ViewBag.DataPoints2 != "[]")
+                                                {
+                                                    <td><div class="statistics_Value">@ViewBag.enheraf2</td>
+                                                }
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr>
+                                    <p>
+                                        شاخصه های اماری مربوط به روز
+
+
+                                        @if (ViewBag.Date2 != null)
+                                        {
+                                            <span style="color:lightseagreen">@ViewBag.Date1</span>
+                                            <span>تا روز</span>
+
+                                            <span style="color:lightseagreen">@ViewBag.Date2</span>
+                                        }
+
+
+                                        @*اگر دکمه ی مقایسه ای انتخاب شده*@
+                                        @*assign in Comparation2Days Action*@
+                                        else if (ViewBag.LDate != null)
+                                        {
+                                            <span style="color:lightseagreen">@ViewBag.FDate</span>
+                                            <span>و</span>
+                                            <span style="color:lightseagreen">@ViewBag.LDate</span>
+
+                                        }
+                                        else
+                                        {
+                                            <span style="color:lightseagreen">@ViewBag.Date</span>
+                                        }
+                                        <span>میباشد.</span>
+                                    </p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">آیا از خروج مطمئن هستید؟</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="text-align:right">در صورت خروج برای دسترسی باید دوباره لاگین کنید</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">انصراف</button>
+                    <a class="btn btn-primary" href="login.html">خارج شدن</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="~/Content/chART/jquery.min.js"></script>
+    <script src="~/Content/chART/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Content/chART/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/Content/chART/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="~/Content/chART/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/Content/chART/chart-area-demo.js"></script>
+    <script src="~/Content/chART/chart-bar-demo.js"></script>
+    <script src="~/Content/chART/chart-pie-demo.js"></script>
+
+    @*Start Modal*@
+    <div class="container" style="padding:20px">
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" style="padding:15px;padding-bottom:0px; border-radius:20px">
+                    <div class="modal-header" style="background-color:rgb(51,204,225);border-radius:10px">
+                        <h4 id="modal-title" style="text-align: center">ایجاد کنید</h4>
+                    </div>
+                    <br />
+                    <div id="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="close_button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*EndModal*@
+
+
+
+
+
+
+
+
+</body>
+
+</html>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Bootstrap_Rtl/css/bootstrap-rtl.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="~/Scripts/modal.js"></script>
+<script language="JavaScript" type="text/javascript">
+
+    const name = ["پیامبر اکرم (ص):",
+        " امام علی (ع):",
+        "امام علی (ع): ",
+        "امام علی (ع):",
+        "امام علی (ع): ",
+        "امام باقر (ع):",
+        "امام صادق (ع):",
+        "پیامبر خدا (ص):",
+        "امام علی (ع):",
+        "امام علی (ع):",
+        "امام باقر (ع):",
+        "پیامبر خدا (ع)",
+        "پیامبر خدا (ع):",
+        "امام علی (ع):",
+        "امام علی (ع):",
+        "امام علی (ع):"];
+    const sokhan = ["ایمان در ده چیز است: شناخت، فرمانبری از خدا، علم، عمل، پاکدامنی، سخت کوشی، شکیبایی، یقین، خشنودی و تسلیم در برابر خدا. هر یک از این ده رکن کم شود، رشته ایمان از هم پاشیده می شود.",
+        "کار کنید و آن را به پایانش رسانید و در آن پایداری کنید؛ آن گاه شکیبایی ورزید و پارسا باشید. همانا شما را پایانی است؛ پس، خود را به آن پایان (بهشت) رسانید.",
+        "هرکس کارش او را کُند برد، نسبش (حسبش) او را شتابان نبرد.",
+        "در کار پیگیر باشید، زیرا خداوند برای کار مؤمنان پایانی جز مرگ قرار نداده است.",
+        " کار (خیر) اندک، که بر آن مداومت ورزی، از کار بسیار که از آن خسته شوی، امیدوار کننده تر است.",
+        "هیچ چیز نزد خداوند، محبوب تر از کاری نیست که بر آن مداومت شود، هر چند اندک باشد.",
+        " خداوند از هر کس یک نماز بپذیرد، عذابش نکند و از هر که، یک کار خوب بپذیرد. . . عذابش نکند.",
+        "سه چیز، شخص مرده را همراهی می کنند: خانواده اش، دارایی اش و عملش. دو تای آنها بر می گردند و یکی باقی می ماند. خانواده و دارایی او برمی گردند و عملش با او می ماند.",
+        "بر شما باد به تلاش و سخت کوشی و مهیا شدن و آماده گشتن.",
+        "«کار خوب» اندوخته ای ماندنی و میوه ای پاکیزه و خوشگوار است.",
+        "«ایمان» اقرار است و عمل، و اسلام آوردن، صرفاً اقراری است بدون عمل.",
+        "برترین کارها، دشوارترین آنهاست.",
+        "برترین کار، با دوام ترین آنهاست، هر چند اندک باشد.",
+        " به طاعت خدای سبحان دست نیابد مگر کسی که تلاش کند و نهایت کوشش خود را به کار گیرد.",
+        "از هر کاری که کننده اش آن را برای خود می پسندد و بر مردم مسلمان نمی پسندد، دوری کن.",
+        " از هر کاری که در نهان انجام می شود و در آشکار از انجام آن شرم می شود، دوری کن."
+    ];
+
+    $(document).ready(function () {
+        var random_number = Math.floor(Math.random() * 16);
+        $("#name").html(name[random_number]);
+
+        $("#sokhan").html(sokhan[random_number]);
+    });
+
+    $(document).ready(function () {
+         @{
+            if (ViewBag.DataPoints2 != null)
+            {
+                <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    zoomEnabled: true,
+                    title: { text: "نمودار نقطه ای", fontSize: 20 },
+                    subtitles: [{
+                        text: "نمودار نقطه ای: محور افقی زمان و محور عمودی دما را نشان میدهد.", fontSize: 13
+                    }],
+                    axisX: { title: "زمان ", titleFontSize: 13 },
+                    axisY: { title: "دما", includeZero: true, titleFontSize: 13 },
+
+                    data: [{ type: "scatter", name: "@ViewBag.FDate", color: "#ff54eb", toolTipContent: "<b>زمان: </b> ساعت {x} <br/><b>دما: </b> {y} درجه", dataPoints: @Html.Raw(ViewBag.DataPoints1)},
+                        { type: "scatter", name: "@ViewBag.LDate", color: "#34eb58", toolTipContent: "<b>زمان: </b> ساعت {x} <br/><b>دما: </b> {y} درجه", dataPoints: @Html.Raw(ViewBag.DataPoints2)}
+                    ]
+                });
+                </text>
+            }
+            else
+            {
+                 <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    zoomEnabled: true,
+                    title: { text: "نمودار نقطه ای", fontSize: 20 },
+                    subtitles: [{
+                        text: "نمودار نقطه ای: محور افقی زمان و محور عمودی دما را نشان میدهد.", fontSize: 13
+                    }],
+                    axisX: { title: "زمان ", titleFontSize: 13 },
+                    axisY: { title: "دما", includeZero: true, titleFontSize: 13 },
+
+                    data: [{ type: "scatter", toolTipContent: "<b>زمان: </b> ساعت {x} <br/><b>دما: </b> {y} درجه", dataPoints: @Html.Raw(ViewBag.DataPoints)}
+
+                    ]
+                });
+                </text>
+            }
+         }
+
+
+
+
+
+        chart.render();
+        document.getElementById("TypeOfChart").innerHTML = "خطی";
+     });
+
+
+
+
+
+
+
+    $("#ColumnChart").click(function () {
+        @{
+            if (ViewBag.DataPoints2 != null)
+            {
+                <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    animationEnabled: true,
+                    exportEnabled: true,
+                    title: { text: "نمودار ستونی " },
+                    data: [{ type: "column", name: "@ViewBag.FDate", toolTipContent: "<b>زمان<span style='color:#ff54eb'>(</span>ساعت<span style='color:#ff54eb'>)=</span> </b>  {x} <br/><b>زمان<span style='color:#ff54eb'>(</span>درجه<span style='color:#ff54eb'>)=</span> </b> {y} ", color:"#ff54eb", showInLegend: true, dataPoints: @Html.Raw(ViewBag.DataPoints1)},
+                        { type: "column", name: "@ViewBag.LDate", toolTipContent: "<b>زمان<span style='color:#34eb58'>(</span>ساعت<span style='color:#34eb58'>)=</span> </b>  {x} <br/><b>زمان<span style='color:#34eb58'>(</span>درجه<span style='color:#34eb58'>)=</span> </b> {y} ", color:"#34eb58", showInLegend: true, dataPoints: @Html.Raw(ViewBag.DataPoints2)}]
+                });
+                </text>
+            }
+            else
+            {
+                 <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    animationEnabled: true,
+                    exportEnabled: true,
+                    title: { text: "نمودار ستونی " },
+                    data: [{ type: "column", name: "@ViewBag.Date", toolTipContent: "<b>زمان<span style='color:red'>(</span>ساعت<span style='color:red'>)=</span> </b>  {x} <br/><b>زمان<span style='color:red'>(</span>درجه<span style='color:red'>)=</span> </b> {y} ", showInLegend: true, dataPoints: @Html.Raw(ViewBag.DataPoints)}]
+                });
+                </text>
+            }
+         }
+
+        chart.render();
+        document.getElementById("TypeOfChart").innerHTML = "ستونی ";
+
+        });
+
+
+    $("#CircularChart").click(function () {
+        @{
+            if (ViewBag.DataPoints2 != null)
+            {
+                <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    theme: "light1", // "light1", "light2", "dark1", "dark2"
+                    exportEnabled: true,
+                    animationEnabled: true,
+                    title: { text: "نمودار دایره ای  " },
+                    subtitles: [{ text: "" }],
+                    data: [{ type: "pie",name: "@ViewBag.FDate", startAngle: 180, toolTipContent: "<b>زمان: </b> ساعت {x} <br/><b>دما: </b> {y} درجه", showInLegend: "true", legendText: "{label}", indexLabel: "{label} - {y}%", dataPoints: @Html.Raw(ViewBag.DataPoints1)},
+                           {type: "pie",name: "@ViewBag.LDate",startAngle: 180,toolTipContent: "<b>زمان: </b> ساعت {x} <br/><b>دما: </b> {y} درجه",showInLegend: "true",legendText: "{label}",indexLabel: "{label} - {y}%",dataPoints: @Html.Raw(ViewBag.DataPoints2)}]
+            });
+                </text>
+            }
+            else
+            {
+                <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    theme: "light1", // "light1", "light2", "dark1", "dark2"
+                    exportEnabled: true,
+                    animationEnabled: true,
+                    title: { text: "نمودار دایره ای  " },
+                    subtitles: [{ text: "" }],
+                    data: [{ type: "pie", startAngle: 180, toolTipContent: "<b>زمان: </b> ساعت {x} <br/><b>دما: </b> {y} درجه", showInLegend: "true", legendText: "{label}", indexLabel: "{label} - {y}%", dataPoints: @Html.Raw(ViewBag.DataPoints)}]
+            });
+                </text>
+            }
+         }
+
+
+
+
+        chart.render();
+        document.getElementById("TypeOfChart").innerHTML = "دایره ای";
+
+        });
+
+
+    $("#AreaChart").click(function () {
+        @{
+            if (ViewBag.DataPoints2 != null)
+            {
+                <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    theme: "light2",
+                    animationEnabled: true,
+                    title: { text: "مساحت سطح زیر نمودار" },
+                    axisX: { title: "(زمان (ساعت" },
+                    axisY: { title: "(دما (درجه " },
+
+                    data:
+                        [{ type: "area", color: "#ff54eb", markerSize: 0, toolTipContent: "زمان:  ساعت {x} <br>دما: {y} درجه", dataPoints: @Html.Raw(ViewBag.DataPoints1)},
+                            { type: "area", color: "#34eb58", markerSize: 0, toolTipContent: "زمان:  ساعت {x} <br>دما: {y} درجه", dataPoints: @Html.Raw(ViewBag.DataPoints2)}
+                        ]
+                });
+                </text>
+            }
+            else
+            {
+                <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    theme: "light2",
+                    animationEnabled: true,
+                    title: { text: "مساحت سطح زیر نمودار" },
+                    axisX: { title: "(زمان (ساعت" },
+                    axisY: { title: "(دما (درجه " },
+                    data: [{ type: "area", color: "#62e3fc", markerSize: 0, toolTipContent: "زمان:  ساعت {x} <br>دما: {y} درجه", dataPoints: @Html.Raw(ViewBag.DataPoints)}
+                        ]
+                });
+                </text>
+            }
+         }
+
+
+            chart.render();
+            document.getElementById("TypeOfChart").innerHTML = "مساحت";
+
+
+        });
+
+
+    $("#LinearChart").click(function () {
+
+
+        @{if (ViewBag.DataPoints2 != null)
+            {
+          <text>
+          var chart = new CanvasJS.Chart("chart", {
+                zoomEnabled: true,
+                exportEnabled: true,
+                animationEnabled: true,
+                xValueType: "dateTime",
+                title: { text: "نمودار خطی   " },
+
+                data: [
+                    { type: "line", name: "@ViewBag.FDate", toolTipContent: "<b>زمان<span style='color:#ff54eb'>(</span>ساعت<span style='color:#ff54eb'>)=</span> </b>  {x} <br/><b>زمان<span style='color:#ff54eb'>(</span>درجه<span style='color:#ff54eb'>)=</span> </b> {y} ", color:"#ff54eb", showInLegend: true, dataPoints: @Html.Raw(ViewBag.DataPoints1)},
+                    { type: "line", name: "@ViewBag.LDate", toolTipContent: "<b>زمان<span style='color:#34eb58'>(</span>ساعت<span style='color:#34eb58'>)=</span> </b>  {x} <br/><b>زمان<span style='color:#34eb58'>(</span>درجه<span style='color:#34eb58'>)=</span> </b> {y} ", color: "#34eb58", showInLegend: true, dataPoints: @Html.Raw(ViewBag.DataPoints2)}
+                ]
+          });
+          </text>
+            }
+
+            else
+            {
+                <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    zoomEnabled: true,
+                    exportEnabled: true,
+                    animationEnabled: true,
+                    xValueType: "dateTime",
+                    title: { text: "نمودار خطی   " },
+                    data: [{ type: "line", toolTipContent: "<b>زمان<span style='color:red'>(</span>ساعت<span style='color:red'>)=</span> </b>  {x} <br/><b>زمان<span style='color:red'>(</span>درجه<span style='color:red'>)=</span> </b> {y} ", dataPoints: @Html.Raw(ViewBag.DataPoints)}]
+                });
+                </text>
+            }
+
+          }
+
+            chart.render();
+            document.getElementById("TypeOfChart").innerHTML = "نقطه ای";
+
+
+    });
+
+
+    $("#ScatterChart").click(function () {
+        @{
+            if (ViewBag.DataPoints2 != null)
+            {
+                <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    zoomEnabled: true,
+                    title: { text: "نمودار نقطه ای", fontSize: 20 },
+                    subtitles: [{
+                        text: "نمودار نقطه ای: محور افقی زمان و محور عمودی دما را نشان میدهد.", fontSize: 13
+                    }],
+                    axisX: { title: "زمان ", titleFontSize: 13 },
+                    axisY: { title: "دما", includeZero: true, titleFontSize: 13 },
+
+                    data: [{ type: "scatter", name: "@ViewBag.FDate", color: "#ff54eb", toolTipContent: "<b>زمان: </b> ساعت {x} <br/><b>دما: </b> {y} درجه", dataPoints: @Html.Raw(ViewBag.DataPoints1)},
+                        { type: "scatter", name: "@ViewBag.LDate", color: "#34eb58", toolTipContent: "<b>زمان: </b> ساعت {x} <br/><b>دما: </b> {y} درجه", dataPoints: @Html.Raw(ViewBag.DataPoints2)}
+                    ]
+                });
+                </text>
+            }
+            else
+            {
+                 <text>
+                var chart = new CanvasJS.Chart("chart", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    zoomEnabled: true,
+                    title: { text: "نمودار نقطه ای", fontSize: 20 },
+                    subtitles: [{
+                        text: "نمودار نقطه ای: محور افقی زمان و محور عمودی دما را نشان میدهد.", fontSize: 13
+                    }],
+                    axisX: { title: "زمان ", titleFontSize: 13 },
+                    axisY: { title: "دما", includeZero: true, titleFontSize: 13 },
+
+                    data: [{ type: "scatter", toolTipContent: "<b>زمان: </b> ساعت {x} <br/><b>دما: </b> {y} درجه", dataPoints: @Html.Raw(ViewBag.DataPoints)}
+
+                    ]
+                });
+                </text>
+            }
+         }
+
+
+
+            chart.render();
+            document.getElementById("TypeOfChart").innerHTML = "خطی";
+            });
+
+
+
+
+
+
+    $("#IntervalDate").click(function () {
+
+        $.get("/Values/IntervalDate", { id:@ViewBag.PartID}, function (result) {
+            $("#myModal").modal();
+            $("#modal-title").html("برای نمایش جزئیات تاریخ را وارد نمایید");
+            $("#modal-body").html(result);
+                });
+
+
+            });
+
+    $("#SingleDate").click(function ()
+    {
+
+        $.get("/Values/SingleDate", { id:@ViewBag.PartID}, function (result) {
+            $("#myModal").modal();
+            $("#modal-title").html("برای نمایش جزئیات تاریخ را وارد نمایید");
+            $("#modal-body").html(result);
+                });
+
+
+            })
+
+
+
+     $("#Compar").click(function () {
+
+        $.get("/Values/Comparation2Days", { id:@ViewBag.PartID}, function (result) {
+            $("#myModal").modal();
+            $("#modal-title").html("برای نمایش جزئیات تاریخ را وارد نمایید");
+            $("#modal-body").html(result);
+                });
+
+
+            });
+
+
+
+
+</script>

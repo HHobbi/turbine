@@ -1,0 +1,93 @@
+﻿@model WebApplication15.Models.Employee
+@{
+    ViewBag.Title = "ویرایش" + @Model.UserName;
+}
+
+<h4>ویرایش @Model.UserName</h4>
+
+
+<form id="form" method="post" action="/managment/EditEmployee">
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+
+            <label class="control-label col-md-2">نام کاربری</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", Required = "Required", autocomplete = "off", placeholder = "فیلد را خالی نگذارید", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <label class="control-label col-md-2">رمز عبور</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", Required = "Required", autocomplete = "off", placeholder = "فیلد را خالی نگذارید" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*@{
+            var visitor = Model.Roles.Contains("visitor");
+            var analyzer = Model.Roles.Contains("analyzer");
+            var editor = Model.Roles.Contains("editor");
+            var manager = Model.Roles.Contains("manager");
+        }*@
+        <label class="control-label col-md-2" style="visibility:hidden">دسترسی:</label>
+
+        <label>مدیر</label>
+        <input type="checkbox" value="true" name="manager" id="manager" />
+        <label>مشاهده گر</label>
+        <input type="checkbox" value="true" name="visitor" id="visitor" />
+        <label>ویرایشگر</label>
+        <input type="checkbox" value="true" name="editor" id="editor" />
+        <label>تحلیلگر</label>
+        <input type="checkbox" value="true" name="analyzer" id="analyzer" />
+        <p id="ErrorMessage" style="color:red"></p>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="به روز رسانی" class="btn btn-default btn-sm" />
+
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div class="text-center text-danger">@ViewBag.Message</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+}
+
+<script>
+    $("#manager").attr('checked', true)
+
+    @{
+        var visitor = Model.Roles.Contains("visitor");
+        var analyzer = Model.Roles.Contains("analyzer");
+        var editor = Model.Roles.Contains("editor");
+        var manager = Model.Roles.Contains("manager");
+     }
+    $("#manager").attr("checked", @manager.ToString().ToLower());
+    $("#editor").attr("checked", @editor.ToString().ToLower());
+    $("#visitor").attr("checked", @visitor.ToString().ToLower());
+    $("#analyzer").attr("checked", @analyzer.ToString().ToLower());
+
+    $("#form").submit(function (evnt) {
+            if ($("#manager").prop("checked") == false &&
+            $("#visitor").prop("checked") == false &&
+            $("#editor").prop("checked") == false &&
+            $("#analyzer").prop("checked") == false) {
+            $("#ErrorMessage").html("حداقل باید یک نقش دارا باشد");
+            event.preventDefault();
+
+        }
+    });
+</script>

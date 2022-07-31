@@ -1,0 +1,35 @@
+﻿@model List<WebApplication15.Models.Value>
+@* this page display in pdf *@
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+    th, td {
+        text-align: center;
+    }
+</style>
+<div dir="rtl">
+    
+    <h4 >نام بخش :<b>   @ViewBag.SectionName</b></h4>
+    <h4>نام قسمت :<b> @ViewBag.PartName</b></h4>
+    <h4>تاریخ : @ViewBag.Date</h4>
+    <hr />
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th style="background-color:aqua">ساعت</th>
+            <th style="background-color:aqua">مقدار</th>
+        </tr>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => i.Clock)</td>
+                <td>@Html.DisplayFor(model => i.Value1)</td>
+            </tr>
+        }
+    </table>
+
+</div>
+@*</body>
+</html>*@

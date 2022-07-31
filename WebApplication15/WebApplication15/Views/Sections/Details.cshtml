@@ -1,0 +1,439 @@
+﻿
+@model IEnumerable<WebApplication15.Models.Part>
+
+
+
+<style>
+
+    /*End_dark mode*/
+    .checkbox-switch {
+        cursor: pointer;
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        text-align: left;
+        width: 80px;
+        height: 30px;
+        -webkit-border-radius: 30px;
+        border-radius: 30px;
+        line-height: 1.2;
+        font-size: 14px;
+    }
+
+        .checkbox-switch input.input-checkbox {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 80px;
+            height: 30px;
+            padding: 0;
+            margin: 0;
+            opacity: 0;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .checkbox-switch .checkbox-animate {
+            position: relative;
+            width: 80px;
+            height: 30px;
+            background-color: #95a5a6;
+            -webkit-transition: background 0.25s ease-out 0s;
+            transition: background 0.25s ease-out 0s;
+        }
+
+            .checkbox-switch .checkbox-animate:before {
+                content: "";
+                display: block;
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                border-radius: 10px;
+                -webkit-border-radius: 10px;
+                background-color: #7f8c8d;
+                top: 5px;
+                left: 5px;
+                -webkit-transition: left 0.3s ease-out 0s;
+                transition: left 0.3s ease-out 0s;
+                z-index: 10;
+            }
+
+        .checkbox-switch input.input-checkbox:checked + .checkbox-animate {
+            background-color: #2ecc71;
+        }
+
+            .checkbox-switch input.input-checkbox:checked + .checkbox-animate:before {
+                left: 55px;
+                background-color: #27ae60;
+            }
+
+        .checkbox-switch .checkbox-off,
+        .checkbox-switch .checkbox-on {
+            float: left;
+            color: #fff;
+            font-weight: 700;
+            padding-top: 6px;
+            -webkit-transition: all 0.3s ease-out 0s;
+            transition: all 0.3s ease-out 0s;
+        }
+
+        .checkbox-switch .checkbox-off {
+            margin-left: 30px;
+            opacity: 1;
+        }
+
+        .checkbox-switch .checkbox-on {
+            display: none;
+            float: right;
+            margin-right: 35px;
+            opacity: 0;
+        }
+
+        .checkbox-switch input.input-checkbox:checked + .checkbox-animate .checkbox-off {
+            display: none;
+            opacity: 0;
+        }
+
+        .checkbox-switch input.input-checkbox:checked + .checkbox-animate .checkbox-on {
+            display: block;
+            opacity: 1;
+        }
+
+
+    /*End_dark mode*/
+
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        direction: rtl;
+        margin: 0;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        font-family: sans-serif;
+        font-weight: 100;
+        Background-attachment: scroll;
+        background-image: url('../../Content/21.jpg');
+        background-attachment: fixed;
+    }
+
+    .container_1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -350px );
+        padding-bottom: 30px;
+        width: 800Px;
+    }
+
+    table {
+        width: 800px;
+        border-collapse: collapse;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    th,
+    td {
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #000;
+        text-align: center;
+    }
+
+    thead th {
+        background-color: #f9fa04;
+        text-align: center;
+    }
+
+    tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    tbody td {
+        position: relative;
+    }
+
+        tbody td:hover:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -9999px;
+            bottom: -9999px;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: -1;
+        }
+
+    .Text-Center_1 {
+        text-align: center;
+    }
+
+    #CreateNew {
+        border-top-left-radius: 20PX;
+        border-bottom-right-radius: 20px;
+        background-color: cornflowerblue;
+        display: inline-block;
+        height: 20Px;
+        width: 110Px;
+        z-index: 1;
+    }
+
+        #CreateNew:hover {
+            background-color: aqua;
+            box-shadow: rgba(0,0,0,0.3) 5px 5px 7px;
+        }
+
+    #table {
+        border-radius: 20px;
+    }
+
+    .links {
+        text-decoration: none;
+        color: blue;
+        cursor: pointer;
+    }
+
+    #CreateNew_Link:hover {
+        color: rgb(1, 1, 9)
+    }
+
+    #close_button:hover {
+        color: red;
+    }
+</style>
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pure CSS Table Highlight (vertical & horizontal)</title>
+    <link rel="stylesheet" href="css/style.css">
+    @*<link href="~/Content/Bootstrap_Rtl/css/bootstrap-rtl.min.css" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="~/Content/Bootstrap_Rtl/css/bootstrap-rtl.min.css" rel="stylesheet" />
+</head>
+
+<body dir="rtl">
+    @*start_dark mode*@
+    <script>
+
+
+
+        var flag =@ViewBag.flag;
+        flag = parseInt(flag);
+
+        if (flag == 0) {
+            document.body.style.backgroundImage = "url('../../Content/21_21.png')";
+        }
+        function toggleToobarStatus() {
+
+            check_value = document.querySelector('.input-checkbox').value;
+            if (flag == 1) {
+                document.getElementById("SectionName").style.color = "yellow";
+                document.body.style.backgroundImage = "url('../../Content/21_21.png')";
+                flag = 0;
+
+                var tds = document.getElementsByTagName("td");
+                for (var i = 0, j = tds.length; i < j; ++i)
+                    tds[i].style.color = "white";
+
+                var ths = document.getElementsByTagName("th");
+                for (var i = 0, j = ths.length; i < j; ++i)
+                    ths[i].style.color = "black";
+
+                document.getElementById("returnButtum").style.color = "white";
+            }
+            else {
+                document.getElementById("SectionName").style.color = "black";
+
+                document.body.style.backgroundImage = "url('../../Content/21.jpg')";
+                flag = 1;
+                var tds = document.getElementsByTagName("td");
+
+                for (var i = 0, j = tds.length; i < j; ++i)
+                    tds[i].style.color = "black";
+
+                var ths = document.getElementsByTagName("th");
+                for (var i = 0, j = ths.length; i < j; ++i)
+                    ths[i].style.color = "black";
+
+                document.getElementById("returnButtum").style.color = "blue";
+
+
+            }
+
+
+        }
+    </script>
+    @*End_dark mode*@
+
+
+
+    <div class="container_1">
+        <div class="Text-Center_1">
+            <h2 id="SectionName">@ViewBag.Part</h2>
+
+            <p id="CreateNew">
+                <button onclick="CreateNew(@ViewBag.SectionID)" class="Text-Center_1" style="text-decoration:none; color:rgb(255,255,255);" id="CreateNew">ایجاد قسمت جدید</button>
+            </p>
+            <div style="background-color:rgba(200, 193, 193, 0.55);border:1px solid black; width:45px ;height:23px; border-radius:10px;float:left; ">
+                @Html.ActionLink("بازگشت", "Index", null, new { id = "returnButtum" })
+            </div>
+
+
+            <div class="checkbox-switch" style="right:0px; position:absolute;">
+                <input type="checkbox" checked="" onchange="toggleToobarStatus()" value="1" name="status" class="input-checkbox" id="toolbar-active">
+                <div class="checkbox-animate">
+                    <span class="checkbox-off">خاموش</span>
+                    <span class="checkbox-on">روشن</span>
+                </div>
+            </div>
+
+        </div>
+        <table class="table" id="table">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        نام
+                    </th>
+
+                    <th colspan="2">سایر</th>
+                </tr>
+            </thead>
+            @{var i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tbody>
+                    <tr>
+                        <td>
+                            @i
+                            @*@Html.DisplayFor(modelItem => item.ID)*@
+                        </td>
+                        <td onclick="GoToDetails(@item.ID)" class="links" style="color:black">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td onclick="GoToEditName(@item.ID)" class="links">
+                            ویرایش نام
+                            @*@Html.ActionLink("ویرایش نام", "Edit", new { id = item.ID }, new { @class = "links" })*@
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("جزئیات", "Details", new { id = item.ID })
+                            </td>*@
+                        <td onclick="GoToDelete(@item.ID)" class="links">
+                            حذف
+                            @*@Html.ActionLink("حذف", "Delete", new { id = item.ID }, new { @class = "links" })*@
+                        </td>
+                    </tr>
+                </tbody>
+            }
+
+        </table>
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+    @*Start Modal*@
+    <div class="container" style="padding:20px">
+       
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" style="padding:15px;padding-bottom:0px; border-radius:20px">
+                    <div class="modal-header" style="background-color:rgb(51,204,225);border-radius:10px">
+                        <h4 id="modal-title">ایجاد کنید</h4>
+                    </div>
+                    <br />
+                    <div id="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                        <button id="close_button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*EndModal*@
+
+
+</body>
+</html>
+
+
+<script src="~/Scripts/modal.js"></script>
+<script language="JavaScript" type="text/javascript">
+    window.onload = replaceDigits
+
+    //function GoToDetails(id) {
+    //    window.location.assign("http://localhost:9973/Parts/Details/" + id);
+    //}
+
+    //convert English number to persian number in this page
+    var replaceDigits = function () {
+        var map =
+            [
+                "&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;",
+                "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"
+            ]
+        document.body.innerHTML = document.body.innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function ($0) { return map[$0] });
+    }
+
+    function CreateNew(SectionID) {
+        $.get("/Parts/Create", { SectionID: SectionID }, function (result) {
+            $("#myModal").modal();
+            $("#modal-title").html("قسمت جدید را ایجاد کنید");
+            $("#modal-body").html(result);
+        })
+    }
+
+    function GoToDetails(id) {
+        $.get("/Parts/Details", { id: id }, function (result) {
+            $("#myModal").modal();
+            $("#modal-title").html("برای نمایش جزئیات تاریخ را وارد نمایید");
+            $("#modal-body").html(result);
+        })
+    }
+
+    function GoToEditName(id) {
+        $.get("/Parts/Edit", { id: id }, function (result) {
+            $("#myModal").modal();
+            $("#modal-title").html("ویرایش نام");
+            $("#modal-body").html(result);
+        })
+    }
+
+    function GoToDelete(id) {
+        $.get("/Parts/Delete", { id: id }, function (result) {
+            $("#myModal").modal();
+            $("#modal-title").html("حذف بخش");
+            $("#modal-body").html(result);
+        })
+    }
+
+
+
+</script>
+
+
+
+

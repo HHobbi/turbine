@@ -1,0 +1,70 @@
+﻿@model WebApplication15.Models.Value
+
+@{
+    //ViewBag.Title = "ایجاد خبر";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pure CSS Table Highlight (vertical & horizontal)</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="~/Content/Bootstrap_Rtl/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="~/Content/BootstrapJalaliDatePicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="~/Scripts/BootstrapJalaliDatePicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/BootstrapJalaliDatePicker/bootstrap-datepicker.fa.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=datetime]').datepicker({ dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true });
+        });
+    </script>
+
+</head>
+
+<body dir="rtl">
+    <h4>انتخاب تاریخ</h4>
+
+
+
+    @using (Html.BeginForm("Index", "Values", null, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @*<h4>لطفا تاریخ روز مورد نظر خود را وارد نمایید</h4>
+                <hr />*@
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <input name="PartID" value="@ViewBag.PartID" hidden />
+
+            <div class="form-group">
+                
+                <div class="col-md-10">
+                    @*<input type="datetime" />*@
+                    @*do same EditorFor*@
+
+                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", Required = "Required", autocomplete = "off", placeholder = "تاریخ مورد نظر را وارد نمایید" } })
+                    
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                    <p style="opacity:60%;padding:5px;">به عنوان مثال: 1401/10/03</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ثبت" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </div>
+    }
+</body>
+</html>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

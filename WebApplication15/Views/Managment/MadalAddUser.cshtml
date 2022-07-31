@@ -1,0 +1,79 @@
+﻿@model WebApplication15.Models.Employee
+@{
+    ViewBag.Title = "ایجاد کارمند جدید";
+}
+
+<h4>نام کاربری کارمند جدید را وارد نمایید</h4>
+
+
+<form id="form" method="post" action="/managment/MadalAddUser">
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+
+            <label class="control-label col-md-2">نام کاربری</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", Required = "Required", autocomplete = "off", placeholder = "فیلد را خالی نگذارید" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <label class="control-label col-md-2">رمز عبور</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", Required = "Required", autocomplete = "off", placeholder = "فیلد را خالی نگذارید" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <label>مدیر</label>
+        <input type="checkbox" value="true" name="manager" id="manager" />
+        <label>مشاهده گر</label>
+        <input type="checkbox" value="true" name="visitor" id="visitor" />
+        <label>ویرایشگر</label>
+        <input type="checkbox" value="true" name="editor" id="editor" />
+        <label>تحلیلگر</label>
+        <input type="checkbox" value="true" name="analyzer" id="analyzer" />
+        <p id="ErrorMessage" style="color:red"></p>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ایجاد" class="btn btn-default btn-sm" />
+                @if (ViewBag.MessageSaving == true)
+                {
+                    Html.ActionLink("اضافه کردن کارمند جدید", "Create", "Parts", null, new { @class = "btn btn-md btn-success", @style = "display:none" });
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
+@*<div>
+        @Html.ActionLink("برگشت به فهرست اصلی", "Index")
+    </div>*@
+
+<div class="text-center text-danger">@ViewBag.Message</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+}
+
+<script>
+    $("#form").submit(function (evnt) {
+        if ($("#manager").prop("checked") == false &&
+            $("#visitor").prop("checked") == false &&
+            $("#editor").prop("checked") == false &&
+            $("#analyzer").prop("checked") == false) {
+            $("#ErrorMessage").html("حداقل باید یک نقش دارا باشد");
+            event.preventDefault();
+
+        }
+    });
+</script>

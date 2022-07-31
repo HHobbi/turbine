@@ -1,0 +1,260 @@
+﻿@model IList<WebApplication15.Models.Value>
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "GetValues";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    th, td {
+        text-align: center;
+    }
+</style>
+<style>
+    body {
+        background-image: url('../../Content/21.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+    }
+
+    th, td {
+        text-align: center;
+    }
+
+    .bd-yellow {
+        background-color: rgba(246, 247, 9, 0.40);
+        width: 10px;
+    }
+
+    .form-control {
+        text-align: center;
+    }
+</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pure CSS Table Highlight (vertical & horizontal)</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="~/Content/Bootstrap_Rtl/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="~/Content/BootstrapJalaliDatePicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="~/Scripts/BootstrapJalaliDatePicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/BootstrapJalaliDatePicker/bootstrap-datepicker.fa.min.js"></script>
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=datetime]').datepicker({ dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true });
+        });
+    </script>
+
+</head>
+
+<body dir="rtl">
+    <div class="container">
+        <h4>انتخاب تاریخ</h4>
+
+        <div class="form-group" style="display:inline-block">
+            @Html.LabelFor(model => Model[0].Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*<input type="datetime" />*@
+                @*do same EditorFor*@
+
+                <input type="datetime" value="@Model[0].Date" class="form-control" required autocomplete="off" placeholder="تاریخ مورد نظر را وارد نمایید" id="DateBox" onchange="changed()" />
+                @*@Html.EditorFor(model => Model[0].Date, new { htmlAttributes = new { @class = "form-control", Required = "Required", autocomplete = "off", placeholder = "تاریخ مورد نظر را وارد نمایید", @id = "DateBox", @onchange = "changed()" } })*@
+                @Html.ValidationMessageFor(model => Model[0].Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div style="background-color:rgba(200, 193, 193, 0.55);border:1px solid black; width:45px ;height:23px; border-radius:10px;float:left;text-align:center;display:inline">
+            @Html.ActionLink("بازگشت", "Details", "Sections", new { id = ViewBag.SectionID }, null)
+        </div>
+        <div style="position: relative;">
+            <div id="ref" style="width: 1160px;opacity:80%; height: 500px; z-index: 1; background-color: rgba(220, 245, 244, .95); border-radius: 15px; position: absolute; filter: blur(10px);  ">
+
+            </div>
+            <div style="z-index:1 ;position:relative">
+                @using (Html.BeginForm("SaveingDB", "Values"))
+                {
+
+
+                    <table class="table" style="background-color:rgba(220, 245, 244, 0.95);" id="table">
+
+                        <tr style="background-color:rgba(254, 37, 244, 0.75)">
+                            <th class="bd-yellow">ساعت</th>
+                            <th>مقدار</th>
+                            <th class="bd-yellow">ساعت</th>
+                            <th>مقدار</th>
+                            <th class="bd-yellow">ساعت</th>
+                            <th>مقدار</th>
+                        </tr>
+                        @if (Model != null)
+                        {
+
+                            for (var i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <td class="bd-yellow"><b>@Model[i].Clock</b></td>
+                                    <td>
+                                        <div>
+                                            @Html.TextBoxFor(m => Model[i].Value1, new { @class = "form-control text-center value", autocomplete = "off", @id = "value" })
+                                        </div>
+                                        @Html.HiddenFor(m => Model[i].PartID)
+                                        @Html.HiddenFor(m => Model[i].Date)
+                                        @Html.HiddenFor(m => Model[i].ID)
+                                        @Html.HiddenFor(m => Model[i].Clock)
+                                    </td>
+
+                                    <td class="bd-yellow"><b>@Model[++i].Clock</b></td>
+                                    <td>
+                                        @Html.TextBoxFor(m => Model[i].Value1, new { @class = "form-control text-center value", autocomplete = "off", @id = "value" })
+                                        @Html.HiddenFor(m => Model[i].PartID)
+                                        @Html.HiddenFor(m => Model[i].Date)
+                                        @Html.HiddenFor(m => Model[i].ID)
+                                        @Html.HiddenFor(m => Model[i].Clock)
+                                    </td>
+
+
+                                    <td class="bd-yellow"><b>@Model[++i].Clock</b></td>
+                                    <td>
+                                        @Html.TextBoxFor(m => Model[i].Value1, new { @class = "form-control text-center value", autocomplete = "off", @id = "value" })
+                                        @Html.HiddenFor(m => Model[i].PartID)
+                                        @Html.HiddenFor(m => Model[i].Date)
+                                        @Html.HiddenFor(m => Model[i].ID)
+                                        @Html.HiddenFor(m => Model[i].Clock)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+
+                    <div class="text-center">
+                        <input type="submit" value="ذخیره" class="btn btn-success btn-sm" style="display:inline;" />
+                        <div style="display:inline;">
+                            <div style="display:inline; margin:20px;">@Html.ActionLink("خروجی اکسل امروز", "ExportToExcel", "Values", new { partID = ViewBag.PartID, Date = ViewBag.Date }, new { @class = "btn btn-success btn-sm" })</div>
+                            <div style="display:inline; margin:20px;">@Html.ActionLink(" نمودار گیری", "ExportToChart", "Values", new { partID = ViewBag.PartID, Date = ViewBag.Date }, new { @class = "btn btn-success btn-sm" })</div>
+
+
+                            <div style="display:inline; margin:20px;">@Html.ActionLink("pdf ", "PrintPartialViewToPdf", "Values", new { partID = ViewBag.PartID, Date = ViewBag.Date }, new { @class = "btn btn-success btn-sm" })</div>
+                        </div>
+                    </div>
+                    <br />
+                    <div style="text-align:center;display:inline;">
+                        @if (ViewBag.ResultSave == true)
+                        {
+                            <p class="txtResult" style="color:green"> با موفقیت ثبت شد</p>
+                        }
+                        else if (ViewBag.ResultSave == false)
+                        {
+                            <p class="txtResult" style="color:red">خطا در ثبت اطلاعات</p>
+                        }
+
+
+                    </div>
+
+                }
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    @*Start Modal*@
+    <div class="container" style="padding:20px">
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" style="padding:15px;padding-bottom:0px; border-radius:20px">
+                    <div class="modal-header" style="background-color:rgb(51,204,225);border-radius:10px">
+                        <h4 id="modal-title">ایجاد کنید</h4>
+                    </div>
+                    <br />
+                    <div id="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="close_button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*End Modal*@
+
+</body>
+</html>
+
+
+
+
+
+
+@section scripts
+    {
+
+    <script src="~/Scripts/modal.js"></script>
+
+
+
+
+    <script language="JavaScript" type="text/javascript">
+
+    $(".value").click(function () {
+        $(".txtResult").html(" ");
+    });
+
+
+
+    function GoToDetails() {
+        $.get("/Values/IntervalDate", {}, function (result) {
+            $("#myModal").modal();
+            $("#modal-title").html("برای نمایش جزئیات تاریخ را وارد نمایید");
+            $("#modal-body").html(result);
+        })
+    }
+
+
+
+     function changed() {
+
+        var value = { Date: $("#DateBox").val(), PartID:@Model[0].PartID};
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Ind")',
+            data: '{value:' + JSON.stringify( value )+ '}',
+            dataType: "Json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                window.location.href = result.newUrl
+
+            },
+            error: function (e) {
+                alert("error");
+                console.log(e.Message);
+                console.log(e)
+            }
+        });
+
+
+
+}
+    </script>
+}
+
+
+

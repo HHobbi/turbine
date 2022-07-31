@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Bootstrap_Rtl/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="~/Content/BootstrapJalaliDatePicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrap_Rtl/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    <style>
+        thead {
+            text-align: left;
+            direction: rtl;
+        }
+    </style>
+   
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body style="margin-top:0px">
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/BootstrapJalaliDatePicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/BootstrapJalaliDatePicker/bootstrap-datepicker.fa.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=datetime]').datepicker({ dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true });
+        });
+    </script>
+
+</body>
+</html>
+

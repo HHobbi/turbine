@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="10f2c3b46eb849d29e8af7e3df379662" Name="Diagram1">
+        <EntityTypeShape EntityType="Jenerator_infoModel.Part" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Jenerator_infoModel.Section" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Jenerator_infoModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Jenerator_infoModel.Value" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="Jenerator_infoModel.FK_Parts_Sections" ManuallyRouted="false" />
+        <AssociationConnector Association="Jenerator_infoModel.FK_Values_Parts" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Jenerator_infoModel.Login" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="Jenerator_infoModel.Employee" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="Jenerator_infoModel.Manager" Width="1.5" PointX="7.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

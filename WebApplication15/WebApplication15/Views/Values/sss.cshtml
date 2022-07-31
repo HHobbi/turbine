@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrap_Rtl/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/Scripts/modal.js"></script>
+</head>
+<body>
+    <div>
+        <Button onclick="GoToDetails()">sss</Button>
+    </div>
+    @*Start Modal*@
+    <div class="container" style="padding:20px">
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" style="padding:15px;padding-bottom:0px; border-radius:20px">
+                    <div class="modal-header" style="background-color:rgb(51,204,225);border-radius:10px">
+                        <h4 id="modal-title">ایجاد کنید</h4>
+                    </div>
+                    <br />
+                    <div id="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="close_button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*End Modal*@
+</body>
+
+
+</html>
+
+
+<script>
+    function GoToDetails() {
+        $.get("/Values/IntervalDate", function (result) {
+            $("#myModal").modal();
+            $("#modal-title").html("برای نمایش جزئیات تاریخ را وارد نمایید");
+            $("#modal-body").html(result);
+        })
+    }
+</script>

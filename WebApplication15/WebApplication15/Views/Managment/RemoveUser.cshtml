@@ -1,0 +1,161 @@
+﻿@model WebApplication15.Models.Manager
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        form {
+            border: 3px solid #f1f1f1;
+        }
+
+        input[type=text], input[type=password] {
+            width: 70%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            direction: rtl;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 70%;
+            font-size: 20px;
+        }
+
+            button:hover {
+                opacity: .8;
+            }
+
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: lightgreen;
+        }
+
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 16px;
+            text-align: center;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        input[type="text"]::placeholder, input[type="password"]::placeholder {
+            text-align: right;
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+
+        .cancelbtn {
+            width: 100%;
+        }
+
+        .type {
+            width: 70%;
+            margin: 0px 80px;
+        }
+
+        input[type=checkbox] {
+            display: inline-block;
+        }
+
+        .navigation {
+            width: 100%;
+            height: 50px;
+            background-color: #12739b;
+        }
+
+        ul li {
+            list-style: none;
+            display: inline-block;
+        }
+
+        ul {
+            direction: rtl;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 10px;
+            margin: 10px;
+            position: relative;
+            top: 15px;
+        }
+
+        ul li a:hover {
+            border-bottom: 2px solid skyblue;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="margin: 0% 25%;">
+
+
+        <form action="/Managment/Removeuser?UserName_manager=@Model.username" method="post">
+            <div class="navigation">
+                <ul>
+                    <li><a href="/sections">فهرست بخش ها</a></li>
+                    <li><a href="#">آمارگیری</a></li>
+                    <li><a href="/Managment/adduser?UserName_manager=@Model.username">اضافه کردن کاربر</a></li>
+                    <li><a href="/Managment/changeinfo?UserName_manager=@Model.username ">ویرایش اطلاعات مدیر</a></li>
+                </ul>
+            </div>
+            <p style="text-align: center;"><b>پنل مدیریت وب سایت</b></p>
+            <div class="imgcontainer">
+                <img src="../content/images2.jpg" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+
+                <input type="text" placeholder="نام کاربری را وارد نمایید" name="UserName" required>
+                <label for="uname"><b>نام کاربری</b></label>
+                <br />
+                @Html.ValidationMessageFor(model => model.username, "", new { @Styles = "color:red;display:block" })
+
+
+
+                <br />
+                <button type="submit">حذف </button>
+
+
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+
+</html>

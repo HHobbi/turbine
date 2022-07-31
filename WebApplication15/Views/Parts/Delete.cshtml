@@ -1,0 +1,23 @@
+﻿@model WebApplication15.Models.Part
+
+@{
+    ViewBag.Title = "حذف";
+}
+
+@*<h2>حذف</h2>*@
+
+<h5>آیا از حذف قسمت<b style="font-size:16px"> @Html.DisplayFor(model => model.Name) </b> مطمئن هستید؟</h5>
+<h5 style="color:red;">با حذف این مورد تمامی داده های ذخیره شده مربوط  به آن حذف خواهد شد.</h5>
+<div>
+   
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" />
+            @*@Html.ActionLink("برگشت به فهرست اصلی", "Index")*@
+        </div>
+    }
+</div>

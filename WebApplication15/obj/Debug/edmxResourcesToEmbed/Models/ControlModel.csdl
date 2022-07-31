@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Jenerator_infoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Part">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="SectionID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Section" Relationship="Self.FK_Parts_Sections" FromRole="Parts" ToRole="Sections" />
+    <NavigationProperty Name="Values" Relationship="Self.FK_Values_Parts" FromRole="Parts" ToRole="Values" />
+  </EntityType>
+  <EntityType Name="Section">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Parts" Relationship="Self.FK_Parts_Sections" FromRole="Sections" ToRole="Parts" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Value">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="PartID" Type="Int32" Nullable="false" />
+    <Property Name="Value1" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Precision="7" Nullable="false" />
+    <Property Name="Clock" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Part" Relationship="Self.FK_Values_Parts" FromRole="Values" ToRole="Parts" />
+  </EntityType>
+  <Association Name="FK_Parts_Sections">
+    <End Role="Sections" Type="Self.Section" Multiplicity="1" />
+    <End Role="Parts" Type="Self.Part" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sections">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Parts">
+        <PropertyRef Name="SectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Values_Parts">
+    <End Role="Parts" Type="Self.Part" Multiplicity="1" />
+    <End Role="Values" Type="Self.Value" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Values">
+        <PropertyRef Name="PartID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Jenerator_infoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Parts" EntityType="Self.Part" />
+    <EntitySet Name="Sections" EntityType="Self.Section" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Values" EntityType="Self.Value" />
+    <AssociationSet Name="FK_Parts_Sections" Association="Self.FK_Parts_Sections">
+      <End Role="Sections" EntitySet="Sections" />
+      <End Role="Parts" EntitySet="Parts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Values_Parts" Association="Self.FK_Values_Parts">
+      <End Role="Parts" EntitySet="Parts" />
+      <End Role="Values" EntitySet="Values" />
+    </AssociationSet>
+    <EntitySet Name="Logins" EntityType="Jenerator_infoModel.Login" />
+    <EntitySet Name="Employees" EntityType="Jenerator_infoModel.Employee" />
+    <EntitySet Name="Managers" EntityType="Jenerator_infoModel.Manager" />
+  </EntityContainer>
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Roles" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="ImageName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Manager">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Roles" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ImageName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
